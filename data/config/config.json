@@ -1,19 +1,59 @@
 {
+  // ==================== 服务器列表 ====================
   "servers": [
     {
-      "name": "ased-sea-8c89.liqing850.workers.dev:443",
-      "address": "ased-sea-8c89.liqing850.workers.dev:443",
-      "listen": "127.0.0.1:30000",
-      "port": 30000,
-      "password": "888",
+      // 【必填】服务器名称（随便填，界面上显示用）
+      "name": "美国-洛杉矶-01",
+
+      // 【必填】你的 Workers 部署域名 + 端口（格式：域名:443）
+      "address": "改成自己的部署域名:443",
+
+      // 【必填】本地监听端口（Docker 里建议用 1080，外面映射成 30000 更习惯）
+      // Docker 用户：这里填 1080，docker-compose 里再映射成 30000:1080
+      "listen": "127.0.0.1:1080",
+      "port": 1080,
+
+      // 【必填】你在 Workers 脚本里设置的密码（token）
+      "password": "修改成自己的密码",
+
+      // ==================== 高级功能开关 ====================
+
+      // 是否开启 DOH 解析（推荐开启）
       "dohe": true,
-      "dohurl": "dns.alidns.com/dns-query",
+
+      // DOH 服务器地址（阿里、Cloudflare、Google 任选其一）
+      // 阿里（国内最快）：https://dns.alidns.com/dns-query
+      // Cloudflare：https://1.1.1.1/dns-query
+      // Google：https://dns.google/dns-query
+      "dohurl": "https://dns.alidns.com/dns-query",
+
+      // 优选 IP（可填 Cloudflare 任何 IP，加速连接）
+      // 常用优选 IP：162.159.192.132、162.159.193.132、104.16.123.96 等
       "preferredip": "162.159.192.132",
+
+      // ECH 域名（Cloudflare 官方 ECH 域名，保持不变即可）
       "ech": "cloudflare-ech.com"
     }
+
+    // 想加多个节点？直接复制上面整个 { } ，逗号分开即可
+    // {
+    //   "name": "香港-01",
+    //   "address": "hk-xxxxx.username.workers.dev:443",
+    //   ...
+    // }
   ],
+
+  // ==================== 全局设置 ====================
+
+  // 默认启动哪个节点（从 0 开始编号，填 0 就是上面第一个）
   "selectedServer": 0,
+
+  // 开机是否自动连接
   "autoStart": true,
+
+  // 是否最小化到系统托盘
   "minimizeToTray": true,
+
+  // 启动时直接最小化（不弹窗口）
   "startMinimized": false
 }
