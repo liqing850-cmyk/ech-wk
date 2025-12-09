@@ -1,21 +1,21 @@
-version: '3.8'
+version: "3.8"
+
 services:
   ech-wk:
-    build: .  # 使用当前目录Dockerfile
+    build: .
     container_name: ech-wk
     restart: unless-stopped
     ports:
-      - "1080:1080"  # 代理SOCKS5端口，映射到NAS外部
-      - "5900:5900"  # 可选VNC端口，用于远程GUI访问
+      - "1080:1080"     # 代理端口
+      - "5900:5900"     # VNC 桌面（可选，不想要就删掉这行）
     volumes:
-      - ./config:/root/.config/ECHWorkersClient  # 挂载config.json（本地文件夹）
-      - ./logs:/app/logs  # 可选日志挂载
+      - ./data/config:/root/.config/ECHWorkersClient   # 永久保存你的服务器配置
+      - ./data/logs:/app/logs                          # 日志（可选）
     environment:
-      - DISPLAY=:99
-    privileged: true  # 允许GUI/托盘权限（NAS上可选）
-    # 资源限制（NAS友好）
+      - TZ=Asia/Shanghai
+    # NAS 推荐加上资源限制，防止跑飞
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: "1.0"
           memory: 512M
